@@ -32,28 +32,21 @@ public class DataRestConfig implements RepositoryRestConfigurer {
         HttpMethod[] unsupportedHttpMethods = {HttpMethod.PUT,HttpMethod.POST,HttpMethod.DELETE};
 
         // code to disable HTTP methods PUT,POST and DELETE
-        config.getExposureConfiguration()
-                .forDomainType(Product.class)
-                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedHttpMethods)))
-                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(unsupportedHttpMethods));
 
-        config.getExposureConfiguration()
-                .forDomainType(ProductCategory.class)
-                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedHttpMethods)))
-                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(unsupportedHttpMethods));
+        disableHttpMethods(Product.class,config, unsupportedHttpMethods);
+        disableHttpMethods(ProductCategory.class,config, unsupportedHttpMethods);
 
-        config.getExposureConfiguration()
-                .forDomainType(Country.class)
-                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedHttpMethods)))
-                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(unsupportedHttpMethods));
-
-        config.getExposureConfiguration()
-                .forDomainType(State.class)
-                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedHttpMethods)))
-                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(unsupportedHttpMethods));
-
+        disableHttpMethods(Country.class,config, unsupportedHttpMethods);
+        disableHttpMethods(State.class,config, unsupportedHttpMethods);
         // call helper method to expose id's
         exposeIds(config);
+    }
+
+    private void disableHttpMethods(Class theClass,RepositoryRestConfiguration config, HttpMethod[] unsupportedHttpMethods) {
+        config.getExposureConfiguration()
+                .forDomainType(theClass)
+                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedHttpMethods)))
+                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(unsupportedHttpMethods));
     }
 
     private void exposeIds(RepositoryRestConfiguration config){
