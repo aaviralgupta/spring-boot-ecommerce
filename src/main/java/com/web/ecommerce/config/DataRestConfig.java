@@ -1,7 +1,9 @@
 package com.web.ecommerce.config;
 
+import com.web.ecommerce.entity.Country;
 import com.web.ecommerce.entity.Product;
 import com.web.ecommerce.entity.ProductCategory;
+import com.web.ecommerce.entity.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -37,6 +39,16 @@ public class DataRestConfig implements RepositoryRestConfigurer {
 
         config.getExposureConfiguration()
                 .forDomainType(ProductCategory.class)
+                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedHttpMethods)))
+                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(unsupportedHttpMethods));
+
+        config.getExposureConfiguration()
+                .forDomainType(Country.class)
+                .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedHttpMethods)))
+                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(unsupportedHttpMethods));
+
+        config.getExposureConfiguration()
+                .forDomainType(State.class)
                 .withItemExposure(((metdata, httpMethods) -> httpMethods.disable(unsupportedHttpMethods)))
                 .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(unsupportedHttpMethods));
 
