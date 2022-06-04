@@ -5,6 +5,7 @@ import com.web.ecommerce.entity.Product;
 import com.web.ecommerce.entity.ProductCategory;
 import com.web.ecommerce.entity.State;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
@@ -20,6 +21,8 @@ import java.util.Set;
 @Configuration
 public class DataRestConfig implements RepositoryRestConfigurer {
 
+    @Value("${allowed.origins}")
+    String[] allowedOrigins;
     private EntityManager entityManager;
 
     @Autowired
@@ -40,6 +43,9 @@ public class DataRestConfig implements RepositoryRestConfigurer {
         disableHttpMethods(State.class,config, unsupportedHttpMethods);
         // call helper method to expose id's
         exposeIds(config);
+
+        // configure cors mapping
+        cors.addMapping(config.getBasePath()+"/**").allowedOrigins(allowedOrigins);
     }
 
     private void disableHttpMethods(Class theClass,RepositoryRestConfiguration config, HttpMethod[] unsupportedHttpMethods) {
