@@ -1,0 +1,31 @@
+allowed:
+    origins: https://localhost:4200
+okta:
+    oauth2:
+        client-id: 0oa5abfbpxfhB92RC5d7
+        client-secret: RPc8wnYEHf0PWGZTgbULpeCFXHiziw3FzYAcNzSz
+        issuer: https://dev-23972446.okta.com/oauth2/default
+
+# HTTPS Configuration
+server:
+    port: 8443
+    ssl:
+        enabled: true
+        key-alias: luv2code
+        key-store: classpath:luv2code-keystore.p12
+        key-store-password: secret
+        key-store-type: PKCS12
+spring:
+    data:
+        rest:
+            base-path: /api
+            detection-strategy: ANNOTATED
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        password: ecommerceapp
+        url: jdbc:mysql://localhost:3306/full-stack-ecommerce?useSSL=false&useUnicode=yes&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=UTC
+        username: ecommerceapp
+    jpa:
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQL8Dialect
